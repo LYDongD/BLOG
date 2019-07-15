@@ -6,6 +6,7 @@
       * [当尼采哭泣](reading/philosophy/when-nietzsche-wept.md)
 * [架构](architecture/README.md)
     * [长短网址转换系统](architecture/long-to-short-url.md)
+    * [缓存策略](architecture/cache-strategy.md)
 * [技术反思](reflection/README.md)
   * [并发原理](reflection/concurrent/README.md)
      * [原子类型](reflection/concurrent/atomic.md)
