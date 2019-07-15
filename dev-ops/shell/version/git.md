@@ -51,7 +51,7 @@ vim  ~/.gitmessage
 
 ```
 
-#### git confif
+#### git conf
 
 1 查看当前仓库或全局git配置
 
@@ -66,6 +66,13 @@ git config --global --list
 ```
 git config user.name "xxx"
 git config user.email "xxx"
+
+```
+
+3 关联远程分支
+
+```
+git branch --set-upstream-to origin/master
 
 ```
 
