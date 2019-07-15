@@ -154,6 +154,8 @@
     * [redis](dev-ops/redis/README.md)
       * [配置说明](dev-ops/redis/redis_conf.md)
       * [常用操作](dev-ops/redis/redis_base.md)
+    * [dubbo](dev-ops/dubbo/README.md)
+      * [springboot-dubbo](dev-ops/dubbo/spring-boot-dubbo.md)
     * [kafka](dev-ops/kafka/README.md)
       * [单点部署](dev-ops/kafka/kafka_deploy.md)
       * [常用操作](dev-ops/kafka/kafka_cmd.md)
