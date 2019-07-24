@@ -172,7 +172,7 @@
       * [常用操作](dev-ops/es/es_operation.md) 
     * [protocol buffer](dev-ops/probuf/README.md)
       * [安装使用](dev-ops/probuf/pb.md)
-      * [协议模板](dev-ops/probuf/pb_demo.md)
+      * [协议模板](dev-ops/probuf/pb_grammar.md)
     * [mqtt](dev-ops/mqtt/README.md)
       * [主题](dev-ops/mqtt/mqtt_topic.md)
 	* [shell](dev-ops/shell/text/README.md)
