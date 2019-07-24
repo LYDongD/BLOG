@@ -18,4 +18,7 @@ lsof -i:3306 查看特定端口的进程
 #查看tcp连接及其端口
 netstat -ntp
 
+#查看进程占用的端口号
+netstat -ltnp | grep 119809
+
 ```
