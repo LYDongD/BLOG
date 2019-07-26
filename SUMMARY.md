@@ -47,6 +47,7 @@
      * [核心概念](reflection/coding/core/README.md)
          * [transient关键字](reflection/coding/core/transient.md) 
          * [logback](reflection/coding/core/logback.md)
+         * [泛型](reflection/coding/core/generic.md)
      * [多线程](reflection/coding/multi_thread/README.md)
          * [局部有序](reflection/coding/multi_thread/partialOrder.md) 
          * [线程池](reflection/coding/multi_thread/thread_pool.md)
