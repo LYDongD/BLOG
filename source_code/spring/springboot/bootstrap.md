@@ -83,7 +83,7 @@ public ConfigurableApplicationContext run(String... args) {
 > 事件通知机制
 
 
-[事件通知机制](http://blogimage.ponymew.com/liam/springboot_listeners.png)
+![事件通知机制](http://blogimage.ponymew.com/liam/springboot_listeners.png)
 
 
 这里比较有代表性的两个事件
