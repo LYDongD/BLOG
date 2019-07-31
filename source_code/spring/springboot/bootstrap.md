@@ -108,3 +108,42 @@ org.springframework.boot.SpringApplicationRunListener=\
 org.springframework.boot.context.event.EventPublishingRunListener
 
 ```
+
+### 应用启动异常报告机制
+
+![异常报告](http://blogimage.ponymew.com/liam/异常处理.png)
+
+如图所示，springboot应用启动时，如果发送异常，会通过SpringBootExceptionReporter将异常报告给用户
+
+FailureAnalyzers 整合了分析器FailureAnalyzer和报告器FailureAnalysisReporter列表，轮询所有通过spi机制加载的组件，如果组件可以进行处理则进行处理
+
+* 通过FailureAnalyzer对异常(Throwable)进行分析，生成分析结果FailureAnalysis
+* 异常分析结果FailureAnalysis包含三部分
+    * description 异常描述
+    * action 异常解决方案
+    * cause 异常本身
+* 通过FailureAnalysisReporter将分析结果报告出去，例如LoggingFailureAnalysisReporter将分析结果以指定格式打印
+
+
+例如，应用启动时，如果tomcat指定的端口被其占用，最终会打印：
+
+```
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 8080 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 8080, or configure this application to listen on another port.
+
+```
+
+这里的异常为：
+
+ConnectorStartFailedException
+
+最终由LoggingFailureAnalysisReporter实现异常报告，即打印。
