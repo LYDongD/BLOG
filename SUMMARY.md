@@ -99,6 +99,7 @@
 	  * [服务暴露](source_code/dubbo/service_export.md)
       * [服务引用](source_code/dubbo/service_reference.md)
       * [负载均衡](source_code/dubbo/load_balance.md)
+      * [注册中心](source_code/dubbo/registry.md)
     * [jdk](source_code/jdk1.8/README.md)
       * [任务调度线程池](source_code/jdk1.8/ScheduledThreadPoolExecutor.md)
       * [排序](source_code/jdk1.8/sort.md)
