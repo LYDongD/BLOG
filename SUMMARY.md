@@ -30,6 +30,7 @@
      * [逃逸分析优化](reflection/jvm/escape.md)
      * [内部锁](reflection/jvm/lock.md)
      * [字符串](reflection/jvm/string.md)
+     * [GC](reflection/jvm/gc.md)
   * [编程实践](reflection/coding/README.md)
      * [测试](reflection/coding/test/README.md)
          * [mockito使用攻略](reflection/coding/test/mockito.md)
