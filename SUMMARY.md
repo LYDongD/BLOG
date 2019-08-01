@@ -150,6 +150,7 @@
       * [多数据源](dev-ops/mysql/multi-db.md)
       * [存储过程](dev-ops/mysql/stored_procedure.md)
       * [oracle常用SQL](dev-ops/mysql/oracle.md)
+      * [索引](dev-ops/mysql/index.md)
     * [计算机原理](dev-ops/computer/README.md)
       * [CPU](dev-ops/computer/cpu.md)
       * [网络](dev-ops/computer/net.md)
