@@ -93,58 +93,11 @@ private static Profiles parseExpression(String expression) {
 }
 
 
-
 ```
 
-解析过程涉及函数式接口和谓词的使用，一起来看一下
+3 环境匹配，通过Profiles和谓词实现
 
-> 函数式接口：
-
-@FunctionalInterface标识Profiles是一个函数式接口，仅包含一个抽象方法，接收一个谓词并返回一个布尔值
-
-函数式接口可以用lambada表达式实现，仅关注参数和结果，不关心类名或方法名
-
-```
-@FunctionalInterface
-public interface Profiles {
-
-	/**
-	 * Test if this {@code Profiles} instance <em>matches</em> against the given
-	 * active profiles predicate.
-	 * @param activeProfiles predicate that tests whether a given profile is
-	 * currently active
-	 */
-	boolean matches(Predicate<String> activeProfiles);
-
-    //函数式接口允许包含静态或defaul方法实现
-    static Profiles of(String... profiles) {
-		return ProfilesParser.parse(profiles);
-	}
-}
-
-```
-
-这里接口方法的参数是谓词：Predicate，另一个函数式接口
-
-接收任意类型，并返回bool值，接口的实现是一个谓语判断
-
-```
-@FunctionalInterface
-public interface Predicate<T> {
-
-    /**
-     * Evaluates this predicate on the given argument.
-     *
-     * @param t the input argument
-     * @return {@code true} if the input argument matches the predicate,
-     * otherwise {@code false}
-     */
-    boolean test(T t);
-}
-
-```
-
-这里使用Profile和Predicat组合实现了环境的匹配校验，关键方法在这里：
+输入谓词，对捕获了Profile(注解指定的环境)的Profiles进行校验，并返回校验结果
 
 ```
 	@Override
@@ -155,9 +108,9 @@ public interface Predicate<T> {
 
 ```
 
-matches实现：
+这里的Profiles，是简单的，或根据逻辑关系符(&|!)等组合成的组合Profiles生成的数组(ProfilesParser) 包装器ProfilesParser
 
-activeProfile -> activeProfile.test(profile);
+简单的Profiles:
 
 ```
 //该方法返回的Profiles捕获了参数profie
@@ -167,7 +120,8 @@ private static Profiles equals(String profile) {
 
 ```
 
-谓词 activeProfile的test实现:
+
+谓词 activeProfile实现:
 
 ```
 protected boolean isProfileActive(String profile) {
@@ -179,7 +133,7 @@ protected boolean isProfileActive(String profile) {
 
 ```
 
-多个Profiles通过and或or的包装实现组合型的Profiles
+多个Profiles通过and,or或not等关系符的包装实现组合型的Profiles
 
 ```
 //要求所有profile执行结果都返回true才返回true
@@ -200,7 +154,7 @@ private static Predicate<Profiles> isMatch(Predicate<String> activeProfile) {
 
 ```
 
-组合出来的Profiles或简单的profies构成了Profiles[]，经过包装器，最终返回一个ParsedProfiles
+装饰器ParsedProfiles实现Profile接口，统一管理Profiles[]
 
 ```
 	static Profiles parse(String... expressions) {
@@ -214,4 +168,17 @@ private static Predicate<Profiles> isMatch(Predicate<String> activeProfile) {
 
 ```
 
-包装器matches实际上是轮询Profiles[]进行matches，每个Profiles是组合或简单Profiles，捕获了当前的profile(string)，根据传入的谓词进行环境匹配判断
+统一匹配：
+
+```
+  @Override
+  public boolean matches(Predicate<String> activeProfiles) {
+  	for (Profiles candidate : this.parsed) {
+  		if (candidate.matches(activeProfiles)) {
+  			return true;
+  		}
+  	}
+  	return false;
+  }
+
+```
