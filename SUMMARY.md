@@ -114,6 +114,7 @@
       * [springboot](source_code/spring/springboot/README.md)
         * [启动](source_code/spring/springboot/bootstrap.md)
         * [条件注解](source_code/spring/springboot/condition.md)
+        * [自动配置](source_code/spring/springboot/autoConfiguration.md)
     * [mybatis](source_code/mybatis/README.md)
       * [mybatis基础功能](source_code/mybatis/mybatis.md)
       * [mybatis源码之最佳范式](source_code/mybatis/mybatis_source.md)
