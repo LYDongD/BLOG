@@ -231,3 +231,36 @@ public class CellDatasourceConfig {
 }
 
 ```
+
+
+### springboot-parent中的资源配置
+
+通过resource和filter，配合resource插件，实现资源打包和过滤
+
+```
+<resources>
+    <resource>
+        <filtering>true</filtering>
+        <directory>${basedir}/src/main/resources</directory>
+        <includes>
+            <include>**/application*.yml</include>
+            <include>**/application*.yaml</include>
+            <include>**/application*.properties</include>
+        </includes>
+    </resource>
+    <resource>
+        <directory>${basedir}/src/main/resources</directory>
+        <excludes>
+            <exclude>**/application*.yml</exclude>
+            <exclude>**/application*.yaml</exclude>
+            <exclude>**/application*.properties</exclude>
+        </excludes>
+    </resource>
+</resources>
+
+```
+
+* includes + filter=true 对指定资源进行过滤并导入
+* excludes + filter=false 导入指定资源，并不进行过滤
+
+includes + excludes + filter 实现仅针对部分文件资源进行过滤
