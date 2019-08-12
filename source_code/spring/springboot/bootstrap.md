@@ -109,6 +109,27 @@ org.springframework.boot.context.event.EventPublishingRunListener
 
 ```
 
+> 容器初始化流程
+
+* 构造应用上下文环境
+* 初始化应用上下文
+* 刷新应用上下文前的准备阶段
+* 刷新应用上下文
+* 刷新应用上下文后的扩展接口
+
+准备阶段【ConfigurationClassParser】: springboot会优先加载主类，注册到容器(DefaultListableBeanFactory)
+
+
+刷新阶段: 解析主类的注解，进一步进行容器初始化
+
+* 资源定位(主类包，@ComponentScan和starter的spring.factories)
+* 资源加载(BeanDefinition)
+* 资源注册(BeanDefinition)
+* 依赖注入(创建bean并递归完成注入)
+
+
+[参考](https://juejin.im/post/5ca42bfa6fb9a05e17799e07)
+
 ### 应用启动异常报告机制
 
 ![异常报告](http://blogimage.ponymew.com/liam/异常处理.png)
