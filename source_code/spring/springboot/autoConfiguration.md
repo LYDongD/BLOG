@@ -270,3 +270,4 @@ includes + excludes + filter 实现仅针对部分文件资源进行过滤
 1. 资源目录下，最好区分需要过滤和不需要过滤的目录，分别配置
 2. 避免过滤二进制文件，可以通过nonFilteredFileExtensions属性规避
 3. 注意过滤时指定的占位符，springboot刻意将占位符调整为@，可以通过属性delimiter覆盖重写
+
