@@ -271,3 +271,18 @@ includes + excludes + filter 实现仅针对部分文件资源进行过滤
 2. 避免过滤二进制文件，可以通过nonFilteredFileExtensions属性规避
 3. 注意过滤时指定的占位符，springboot刻意将占位符调整为@，可以通过属性delimiter覆盖重写
 
+### springboot如何省略web.xml配置
+
+> spring如何省略web.xml
+
+根据servlet3.0规范，tomcat启动后会去加载ServletContainerInitilalizer组件，对servlet进行初始化
+
+spring提供了组件SpringServletContainerInitializer，通过注解@HandleTypes把所有的WebApplicationInitializer加载进来并统一启动
+
+这里的SpringServletContainerInitializer定义在META-INF/services下javax.servlet.ServletContainerInitializer，通过spi机制进行加载
+
+> springboot如何省略web.xml
+
+和spring servlet3.0规范不同，springboot启动后会创建webServer，加载TomcatStarter组件(ServletContainerInitializer)
+
+TomcatStart会依次启动ServletContextInitializer组件实现servlet的初始化等
