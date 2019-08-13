@@ -186,6 +186,7 @@
       * [脚本分析](dev-ops/shell/script/README.md)
           * [快速生成md图片链接](dev-ops/shell/script/pushimage.md)
           * [基于地理位置查询脚本](dev-ops/shell/script/geo_search.md)
+          * [分组统计](dev-ops/shell/script/statistic.md)
       * [文本处理](dev-ops/shell/text/README.md)
           * [shell](dev-ops/shell/text/shell.md)  
           * [打印](dev-ops/shell/text/echo.md)
