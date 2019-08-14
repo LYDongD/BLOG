@@ -75,3 +75,27 @@ done
 rm $SYNC_FILE
 
 ```
+
+### 单词分组统计排序
+
+文本：
+
+```
+the day is sunny the the
+the sunny is is
+
+``` 
+
+分组排序：
+
+```
+cat words.txt | tr -s ' ' '\n' | sort | uniq -c | sort -r -k 1 | awk '{ print $2, $1 }'
+
+```
+
+* tr -s A B 将A替换成B， 这里将空格替换成回车
+* sort 根据单词排序，这样把重复的单词排在了一起
+* uniq -c 去重并计算重复的数量
+* sort -r -k 1 按照第一列数量逆序排序
+* awk '{print $2 $1}' 格式化打印第二列和第一列
+
