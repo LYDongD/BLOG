@@ -237,6 +237,185 @@ public class SentinelConfiguration {
     }
 ```
 
+#### 配置nacos数据源
+
+添加naco核心组件SentinelNacosAutoReader
+
+该组件是对ConfigService的封装，负责与nacos建立连接并拉取或接收规则配置更新
+
+* 初始化时主动pull一次nacos配置
+* 启动监听器，当配置发生变化时，nacos主动推送到该服务
+
+```
+@Configuration
+@PropertySources({@PropertySource(value="classpath:/config/nacos.properties")})
+@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "${nacos.config.server-addr}", namespace = "${nacos.config.namespace}"))
+@Slf4j
+public class NacoConfig {
+
+    /**
+     *  连接naco server 并监听配置更新
+     */
+    @Bean
+    public SentinelNacosAutoReader sentinelNacosAutoReader() {
+        return new SentinelNacosAutoReader();
+    }
+}
+
+```
+
+该组件从外部属性文件中加载属性，并通过@EnableNacosConfig设置到nacos的全局配置组件中
+
+
+SentinelNacosAutoReader的具体实现：
+
+```
+public class SentinelNacosAutoReader {
+    private static final Logger log = LoggerFactory.getLogger(SentinelNacosAutoReader.class);
+    @NacosInjected
+    private ConfigService configService;
+
+    public SentinelNacosAutoReader() {
+    }
+
+    @PostConstruct
+    private void post() {
+        AbstractListener flowRuleListen = new AbstractListener() {
+            public void receiveConfigInfo(String configInfo) {
+                SentinelNacosAutoReader.this.loadFlowRule(configInfo);
+            }
+        };
+        AbstractListener degradeRuleLisener = new AbstractListener() {
+            public void receiveConfigInfo(String configInfo) {
+                SentinelNacosAutoReader.this.loadDegradeRule(configInfo);
+            }
+        };
+        AbstractListener systemRuleListener = new AbstractListener() {
+            public void receiveConfigInfo(String configInfo) {
+                SentinelNacosAutoReader.this.loadSystemRule(configInfo);
+            }
+        };
+        AbstractListener paramFlowRuleListener = new AbstractListener() {
+            public void receiveConfigInfo(String configInfo) {
+                SentinelNacosAutoReader.this.loadParamFlowFule(configInfo);
+            }
+        };
+        AbstractListener authorityRuleListener = new AbstractListener() {
+            public void receiveConfigInfo(String configInfo) {
+                SentinelNacosAutoReader.this.loadAuthorityRule(configInfo);
+            }
+        };
+
+        try {
+            SentinelNacosConsts consts = new SentinelNacosConsts();
+            this.initLoadRules(consts);
+            this.configService.addListener(consts.getFlowRuleFileName(), consts.getGroupName(), flowRuleListen);
+            this.configService.addListener(consts.getDegradeRuleFileName(), consts.getGroupName(), degradeRuleLisener);
+            this.configService.addListener(consts.getSystemRuleFileName(), consts.getGroupName(), systemRuleListener);
+            this.configService.addListener(consts.getAutorityFileName(), consts.getGroupName(), authorityRuleListener);
+            this.configService.addListener(consts.getParamFlowFileName(), consts.getGroupName(), paramFlowRuleListener);
+            log.info("完成sentinel from nacos 配置的监听");
+        } catch (NacosException var7) {
+            log.error("sentinel配置监听失败", var7);
+        }
+
+    }
+
+    private void loadFlowRule(String configInfo) {
+        try {
+            List<FlowRule> flowRuls = (List)JSON.parseObject(configInfo, new TypeReference<List<FlowRule>>() {
+            }, new Feature[0]);
+            FlowRuleManager.loadRules(flowRuls);
+            log.info("flowRuleListen 加载规则：{}", configInfo);
+        } catch (Exception var3) {
+            log.error("cast configinfo error", var3);
+        }
+
+    }
+
+    private void loadDegradeRule(String configInfo) {
+        try {
+            List<DegradeRule> Ruls = (List)JSON.parseObject(configInfo, new TypeReference<List<DegradeRule>>() {
+            }, new Feature[0]);
+            DegradeRuleManager.loadRules(Ruls);
+            log.info("degradeRuleLisener 加载规则：{}", configInfo);
+        } catch (Exception var3) {
+            log.error("cast configinfo error", var3);
+        }
+
+    }
+
+    private void loadSystemRule(String configInfo) {
+        try {
+            List<SystemRule> Ruls = (List)JSON.parseObject(configInfo, new TypeReference<List<SystemRule>>() {
+            }, new Feature[0]);
+            SystemRuleManager.loadRules(Ruls);
+            log.info("systemRuleListener 加载规则：{}", configInfo);
+        } catch (Exception var3) {
+            log.error("cast configinfo error", var3);
+        }
+
+    }
+
+    private void loadAuthorityRule(String configInfo) {
+        try {
+            List<AuthorityRule> Ruls = (List)JSON.parseObject(configInfo, new TypeReference<List<AuthorityRule>>() {
+            }, new Feature[0]);
+            AuthorityRuleManager.loadRules(Ruls);
+            log.info("authorityRuleListener 加载规则：{}", configInfo);
+        } catch (Exception var3) {
+            log.error("cast configinfo error", var3);
+        }
+
+    }
+
+    private void loadParamFlowFule(String configInfo) {
+        try {
+            List<ParamFlowRule> Ruls = (List)JSON.parseObject(configInfo, new TypeReference<List<ParamFlowRule>>() {
+            }, new Feature[0]);
+            ParamFlowRuleManager.loadRules(Ruls);
+            log.info("paramFlowRuleListener 加载规则：{}", configInfo);
+        } catch (Exception var3) {
+            log.error("cast configinfo error", var3);
+        }
+
+    }
+
+    private void initLoadRules(SentinelNacosConsts consts) {
+        ExecutorService service = Executors.newSingleThreadExecutor(new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = new Thread(r);
+                t.setName("init-sentinel-rule-thread");
+                t.setDaemon(true);
+                return t;
+            }
+        });
+        service.submit(() -> {
+            try {
+                String flowRuleString = this.configService.getConfig(consts.getFlowRuleFileName(), consts.getGroupName(), 5000L);
+                this.loadFlowRule(flowRuleString);
+                String degradeRuleString = this.configService.getConfig(consts.getDegradeRuleFileName(), consts.getGroupName(), 5000L);
+                this.loadDegradeRule(degradeRuleString);
+                String systemRuleString = this.configService.getConfig(consts.getSystemRuleFileName(), consts.getGroupName(), 5000L);
+                this.loadSystemRule(systemRuleString);
+                String autorityRuleString = this.configService.getConfig(consts.getAutorityFileName(), consts.getGroupName(), 5000L);
+                this.loadAuthorityRule(autorityRuleString);
+                String paramFlowRuleString = this.configService.getConfig(consts.getParamFlowFileName(), consts.getGroupName(), 5000L);
+                this.loadParamFlowFule(paramFlowRuleString);
+            } catch (NacosException var7) {
+                var7.printStackTrace();
+            }
+
+        });
+    }
+
+    public ConfigService getConfigService() {
+        return this.configService;
+    }
+}
+
+```
+
 #### 启动应用
 
 启动应用时指定dashboard服务的tcp server socket唯一地址 **ip:port**, 并指定客户端端口和名称
