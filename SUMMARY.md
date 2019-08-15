@@ -164,6 +164,8 @@
       * [常用操作](dev-ops/redis/redis_base.md)
     * [dubbo](dev-ops/dubbo/README.md)
       * [springboot-dubbo](dev-ops/dubbo/spring-boot-dubbo.md)
+    * [sentinel](dev-ops/sentinel/README.md)
+      * [快速开始](dev-ops/sentinel/base.md)
     * [kafka](dev-ops/kafka/README.md)
       * [单点部署](dev-ops/kafka/kafka_deploy.md)
       * [常用操作](dev-ops/kafka/kafka_cmd.md)
