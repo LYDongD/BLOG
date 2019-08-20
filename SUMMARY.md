@@ -122,6 +122,8 @@
       * [mybatis源码之最佳范式](source_code/mybatis/mybatis_source.md)
       * [mybatis源码之设计模式](source_code/mybatis/mybatis_pattern.md)
       * [mybatis源码之设计思想](source_code/mybatis/https:/mybatis_design.md)
+    * [kafka](source_code/kafka/README.md)
+      * [producer](source_code/kafka/producer.md)
 
 * [golang](golang/README.md)
 	* [初始化](golang/path.md)
