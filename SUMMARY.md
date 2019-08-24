@@ -230,7 +230,7 @@
           * [文件传输](dev-ops/shell/net/ftp.md)
           * [ifconfig](dev-ops/shell/net/ifconfig.md)
           * [ssh](dev-ops/shell/net/ssh.md)
-          * [端口分析](dev-ops/shell/net/port.md)
+          * [端口分析](dev-ops/shell/net/socket.md)
       * [归档与压缩](dev-ops/shell/compress/README.md)
           * [tar](dev-ops/shell/compress/tar.md)
           * [cpio](dev-ops/shell/compress/cpio.md)
