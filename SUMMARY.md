@@ -124,6 +124,9 @@
       * [mybatis源码之设计思想](source_code/mybatis/https:/mybatis_design.md)
     * [kafka](source_code/kafka/README.md)
       * [producer](source_code/kafka/producer.md)
+    * [sentinel](source_code/sentinel/README.md)
+      * [使用场景和设计方案](source_code/sentinel/base.md)
+      * [统计算法原理](source_code/sentinel/stastistic.md)
 
 * [golang](golang/README.md)
 	* [初始化](golang/path.md)
