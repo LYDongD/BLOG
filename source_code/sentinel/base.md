@@ -88,44 +88,6 @@ sentinel为每个功能定义一个slot节点，并用责任链模式将这些�
 3 SlotChainBuilder是一个spi接口，可自定义slot，构建自己的责任链，例如想根据时间段进行限流。
 ```
 
-### 其他框架的责任链模式实现(开放讨论）
-
-> tomcat
-
-pipline-Vale 责任链机制，也是用单向链表实现
-
-
-----
-
-**TODO:**
-
-
-#### 如何计算QPS，RT等指标？
-
-研究 StatisticSlot 组件的实现
-
-StatisticSlot 定义了Metric对象进行统计，在方法退出时，将RT, QPS(区分正常，异常QPS）添加到Metric
-
-这里，用于统计的数据结构是 LeapArray<MetricBucket>
-
-
-
-
-#### 流量限制有几种策略? 分别是如何实现的？
-
-研究 FlowSlot 组件的实现 
-
-##### 流控的策略通常有以下3种：
-
-* 匀速排队(漏铜算法)
-* 直接拒绝
-* Warm Up
-
-
-
-
-
-
 
 
 
