@@ -140,6 +140,13 @@ git show [tag]
 
 ```
 
+### 查看提交文件和内容
+
+```
+git log -n 10 --oneline
+git show [commit version]
+
+```
 #### script 
 
 mark 图片路径前缀
