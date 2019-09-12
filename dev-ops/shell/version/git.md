@@ -102,6 +102,27 @@ git reset -hard HEAD^
 #如果想复原，git log已找不到先前的版本，则通过reflog查看操作日志，查找以前的commit id
 git reflog
 
+
+#如何回退远程版本
+
+0 先确认队友已经在本地保存回退版本之后的版本, 并备份
+git checkout -b branch backup
+
+1 先回退本地版本 
+
+git reflog
+git reset --hard [commitId]
+
+2 强制提交
+git push -f
+
+3 队友回退自己的本地版本并合并之前提交的在回退之后的版本
+git reset --hard [commitId]
+git merge backup
+
+参考https://blog.csdn.net/fuchaosz/article/details/52170105
+
+
 ```
 
 ##### branch
