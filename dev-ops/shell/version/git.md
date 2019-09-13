@@ -5,7 +5,6 @@
 
 #### commit log 提交规范
 
-
 使用git commit ，弹出vim编辑器，提交多行文本
 
 ```
@@ -161,6 +160,13 @@ git show [tag]
 
 ```
 
+### 查看提交文件和内容
+
+```
+git log -n 10 --oneline
+git show [commit version]
+
+```
 #### script 
 
 mark 图片路径前缀
@@ -175,3 +181,25 @@ https://raw.githubusercontent.com/LYDongD/graphic/master/markdown/
 * git remote add xxx  关联远程仓库
 * git remote remove xxx 取消关联
 
+
+## 如何用SSH登录github
+
+> 1 生成一对公私钥，并保存到指定文件
+
+ssh-keygen -t rsa
+
+> 2 上传公钥至github
+
+在个人设置菜单里
+
+> 3 本地设置github站点需要校验的私钥文件地址
+
+vim ~/.ssh/config
+
+```
+host github.com
+HostName github.com
+IdentityFile ~/tmp.txt
+User git
+
+```
