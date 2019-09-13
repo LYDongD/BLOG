@@ -169,3 +169,9 @@ mark 图片路径前缀
 https://raw.githubusercontent.com/LYDongD/graphic/master/markdown/
 
 ```
+
+#### 仓库
+
+* git remote add xxx  关联远程仓库
+* git remote remove xxx 取消关联
+
