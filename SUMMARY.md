@@ -85,6 +85,7 @@
       * [类型](source_code/jdk1.8/type.md)
       * [集合](source_code/jdk1.8/collections/readme.md)
         * [LinkedHashMap](source_code/jdk1.8/collections/linked_hash_map.md)
+        * [ConcurrentHashMap](source_code/jdk1.8/collections/concurretHashMap.md)
     * [spring](source_code/spring/README.md)
       * [架构](source_code/spring/module.md)
       * [容器的基本实现](source_code/spring/container.md)
